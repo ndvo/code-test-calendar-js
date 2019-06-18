@@ -1,0 +1,384 @@
+/* variables */
+:root{
+  /* colors */
+  --dark: #488B8F;
+  --darker: #222222;
+  --light: #FAF9F9;
+  --lighter: #fff;
+  --primary: #5EA3A3;
+}
+html{
+  scroll-behavior: smooth;
+}
+body{
+  background: var(--light);
+  color: var(--darker);
+}
+main, header{
+  max-width: 1200px;
+  margin: 0 auto;
+}
+header h1{
+  color: var(--dark);
+}
+textarea{
+  height: 15ch;
+  width: 100%;
+}
+label{
+  display: flex;
+  justify-content: space-between;
+}
+textarea{
+  display: block;
+}
+
+#calendar{
+  background: var(--lighter);
+  box-shadow: 2px 5px 10px var(--primary);
+  padding: 50px;
+}
+#calendar>main{
+  display: flex;
+  justify-content: center;
+}
+#calendar>header h1{
+  color: var(--primary);
+  font-size: 1.2em;
+  margin-bottom: 20px;
+  text-align: center;
+  text-shadow: 0px 0px 10px var(--primary);
+}
+
+.week{
+  border-right:  solid thin var(--dark);
+  display: flex;
+  flex-direction: column;
+}
+.week:nth-of-type(1){
+  border-left: solid thin var(--dark);
+}
+.week>header{
+  background: var(--primary);
+  color: var(--lighter);
+  width: 100%;
+  padding: 5px 0;
+  text-align: center;
+}
+
+.day{
+  position: relative;
+  border-bottom: solid thin var(--dark);
+  color: var(--darker);
+  min-width: 120px;
+  height: 80px;
+  overflow: hidden;
+}
+.day.other-month{
+  background: var(--light);
+}
+.day.other-month .daynum{
+  border-right: solid thin var(--lighter);
+  border-bottom: solid thin var(--lighter);
+}
+.day>header{
+  display: flex;
+  justify-content: space-between;
+
+}
+.day header button{
+  background: var(--primary);
+  border-radius: 50%;
+  border: none;
+  color: var(--light);
+  cursor: pointer;
+  height: 1.2em;
+  margin: 3px;
+  padding: 0;
+  width: 1.2em;
+}
+.day.past header button{
+  background: var(--light);
+  border: solid thin var(--primary);
+  color: var(--primary);
+  cursor: not-allowed;
+}
+.day .daynum{
+  border-bottom: solid thin var(--light);
+  border-right: solid thin var(--light);
+  text-align: center;
+  width: 3ch;
+}
+.day header button{
+  margin-left: auto;
+}
+.today{
+  box-shadow: 0px 0px 5px  var(--dark);
+}
+
+header .actions.month-switcher{
+  box-shadow: none;
+  display: flex;
+  justify-content: space-between;
+  margin: 0 auto 15px auto;
+  padding: 0;
+  width: 250px;
+}
+header .actions.month-switcher button{
+  background: var(--light);
+  color: var(--dark);
+}
+header .actions.month-switcher button:hover{
+  background: var(--dark);
+  color: var(--light);
+}
+
+header .actions{
+  background: var(--lighter);
+  box-shadow: 2px 5px 10px var(--primary);
+  margin-bottom: 10px;
+  padding: 25px 50px;
+  z-index: 2;
+}
+.actions button{
+  background: var(--primary);
+  border: none;
+  color: var(--lighter);
+  padding: 1ch 3ch;
+  transition: all 0.1s;
+}
+.actions button:hover{
+  background: var(--light);
+  box-shadow: 2px 2px 4px var(--primary);
+  color: var(--dark);
+  cursor: pointer;
+}
+button[disabled],
+button[disabled]:hover
+{
+  background: var(--light);
+  color: var(--lighter);
+  cursor: not-allowed;
+}
+form header{
+  color: var(--dark);
+  font-size: 1.2em;
+}
+#appointment-form{
+  background: var(--lighter);
+  box-shadow: 2px 2px 5px var(--dark);
+  margin: 5px auto;
+  max-height: 0px;
+  max-width: 600px;
+  overflow: hidden;
+  padding: 0px;
+  transition: 0.4s all;
+}
+form label, form header,form .actions, textarea{
+  margin: 12px auto;
+  max-width: 400px;
+}
+article.appointment{
+  background: var(--light);
+  margin: 0 auto;
+  max-width: 100px;
+  overflow: hidden;
+  padding: 2px 5px;
+  transition: all 0.2s;
+}
+.day.filled .add{
+  display: none;
+}
+.appointment h1{
+  color: var(--primary);
+  font-weight: normal;
+  margin: 0;
+  padding: 0px;
+  white-space: nowrap;
+}
+.appointment .with{
+  color: var(--primary);
+  font-size: 1.1em;
+  text-align: right;
+}
+
+
+.appointment main{
+  display: none;
+}
+
+.appointment.show-details{
+  box-shadow: 5px 5px 20px var(--darker);
+  height: 60vh;
+  left: 20vw;
+  max-width: 60vw;
+  padding: 20px;
+  position: fixed;
+  position: fixed;
+  top: 20vh;
+  width: 60vw;
+  z-index: 1;
+}
+.appointment.show-details header{
+  background: var(--primary);
+  color: var(--lighter);
+  font-size: 18px;
+}
+.appointment.show-details header h1{
+  color: var(--lighter);
+  font-size: 1.3em;
+  font-weight: bold;
+  padding: 15px 0 5px;
+  text-align: center;
+}
+.appointment.show-details main{
+  border: solid thin var(--primary);
+  display: block;
+  font-size: 1.3em;
+  height: calc(100% - 120px);
+  padding: 40px 20px;
+}
+.appointment.show-details .with{
+  color: var(--lighter);
+  font-size: 14px;
+  padding: 10px;
+}
+.appointment.show-details .with:before{
+  content: 'with: ';
+  font-style: italic;
+}
+button.close,
+.button.edit,
+.show-details button.remove{
+  display: none;
+}
+.appointment header button.open{
+  background: transparent;
+  border-radius: 0;
+  border: transparent;
+  bottom: 0;
+  color:var(--primary);
+  cursor: pointer;
+  position: relative;
+  width: 100px;
+}
+.appointment.show-details header .open {
+  display: none;
+}
+.appointment button.open:hover{
+  background: var(--primary);
+  color: var(--lighter);
+}
+.show-details.appointment button.edit,
+.show-details.appointment button.close{
+  border-radius: 0;
+  border: var(--lighter) solid thin;
+  display: block;
+  float: right;
+  font-size: 14px;
+  height: auto;
+  padding: 2px;
+  width: 100px;
+}
+.appointment button.edit{
+  display: none;
+}
+.show-details.appointment button.edit{
+  display: block;
+}
+
+dialog{
+  border: solid thin var(--darker);
+  box-shadow: 8px 8px 10px var(--primary);
+  padding: 10px;
+  z-index: 100;
+}
+dialog:backdrop{
+  background: rgba(255,255,255,0.8);
+}
+dialog header{
+  background: var(--primary);
+  color: var(--lighter);
+  padding: 5px;
+  text-align: center;
+}
+dialog main{
+  margin: 10px 0;
+}
+/* fallback */
+dialog.show-details{
+  box-shadow: 0px 0px 800px 100px rgba(255,255,255,0.8);
+  position: fixed;
+  top: 20vh;
+}
+@media (max-width:873px){
+  #calendar > main {
+    display: grid;
+    grid-template-areas: 
+    "mon tue wed thu fri"
+    "sat sat sat sat sat "
+    "sun sun sun sun sun";
+  }
+  #monday{grid-area: mon; border-left: solid thin var(--primary);}
+  #tuesday{grid-area:tue;}
+  #wednesday{grid-area: wed;}
+  #thursday{grid-area:thu;}
+  #friday{grid-area:fri}
+  #saturday{grid-area: sat; }
+  #sunday{grid-area: sun; }
+  #sunday>main, #saturday>main{
+    flex-direction: row;
+    display: flex;
+  }
+  #sunday>main .day, #saturday>main .day{
+    border-left: solid thin var(--primary);
+  }
+  #sunday>main .day:first-of-type{
+    border-left:none;
+  }
+}
+@media (max-width: 629px){
+  .day{
+    min-width: 100px;
+  }
+}
+@media (max-width: 530px){
+  #application{
+    font-size: 12px;
+  }
+  body{
+    font-size: 12px;
+  }
+  .day {
+    min-width: 80px;
+  }
+}
+@media (max-width: 429px){
+  section.actions button{
+    display:block;
+    margin: 5px auto;
+    padding: 3px
+    width: 200px;
+  }
+  .week{
+    min-width: 70px;
+  }
+  .day {
+    min-width: 70px;
+    overflow: hidden;
+  }
+  .week>header{
+    color: var(--primary);
+  }
+  .week>header:first-letter{
+    color: var(--lighter);
+  }
+  #saturday>header, #sunday>header{
+    color:var(--lighter);
+  }
+}
+@media (max-width: 380px){
+  .week, .day{
+    min-width: 50px;
+  }
+}

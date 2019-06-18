@@ -1,0 +1,97 @@
+<!doctype html>
+<html lang="en" data-framework="javascript">
+	<head>
+		<meta charset="utf-8">
+		<title>Calendar App</title>
+		<link rel="stylesheet" href="css/calendar.css">
+	</head>
+	<body>
+        <header>
+            <h1>Vanhack exam Calendar</h1>
+            <section class="actions">
+                <button id="#save" type="button" title="You may save your calendar offline. You'll need to restore it later to view your appointments." onclick="saveCalendar();">Save Calendar</button>
+                <button id="restore" type="button" disabled title="Restore a previously saved calendar." onclick="restoreCalendar(this.Files)">Restore Calendar</button>
+                <input type="file" id="calendar-file" onchange="enableRestore()" >
+            </section>
+        </header>
+        <dialog id="dialog">
+            <header></header>
+            <main></main>
+            <form method="dialog" class="actions">
+                <button type="submit" value="ok">OK</button>
+            </form>
+        </dialog>
+        <main id="application"></main>
+        
+        <template id="appointment-tpl">
+            <article id="appointment-unknown" class="appointment">
+                <header>
+                    <h1></h1>
+                    <div class="with"></div>
+                    <button type="button" onclick="showDetails(this)" title="View details" class="open">more...</button>
+                    <button type="button" onclick="editAppointment(this)" title="Edit this appointment" class="edit">Edit</button>
+                    <button type="button" onclick="removeDetails()" title="Hide details" class="remove close">Close</button>
+                </header>
+                <main>
+                </main>
+            </article>
+        </template>
+        
+        <template id="appointment-form-tpl">
+            <form id="appointment-form" class="form hidden-up" action="javascript:submitForm();">
+                <header></header>
+                <input type="hidden" required name="day">
+                <input type="hidden" name="id">
+                <label for="who">Appointment with:
+                    <input id="who" required name="who" type="text" placeholder="Who are you meeting with?" />
+                </label>
+                <label for="about">About:
+                    <input id="about" required name="about" type="text" placeholder="What is this meeting about?"/>
+                </label>
+                <label for="agenda">Details:</label>
+                <textarea name="agenda" id="agenda"></textarea>
+                <section class="actions">
+                    <button type="button" onclick="removeThisAppointment()">Remove</button>
+                    <button type="button" onclick="closeForm();">Cancel</button>
+                    <button type="submit">Save</button>
+                </section>
+            </form>
+        </template>
+        
+        <template id="calendar-tpl">
+            <article id="calendar">
+                <header>
+                  <h1></h1>
+                  <div class="actions month-switcher">
+                  <button type="button" onclick="changeMonth(-1)" title="View previous Month">Previous</button>
+                  <button type="button" onclick="changeMonth(1)" title="View next Month">Next</button>
+                  </div>
+                </header>
+                <main>
+                    <section id="sunday" class="week"><header>Sunday</header><main></main></section>
+                    <section id="monday" class="week"><header>Monday</header><main></main></section>
+                    <section id="tuesday" class="week"><header>Tuesday</header><main></main></section>
+                    <section id="wednesday" class="week"><header>Wednesday</header><main></main></section>
+                    <section id="thursday" class="week"><header>Thursday</header><main></main></section>
+                    <section id="friday" class="week"><header>Friday</header><main></main></section>
+                    <section id="saturday" class="week"><header>Saturday</header><main></main></section>
+                </main>
+            </article>
+        </template>
+        
+        <template id="day-tpl">
+            <section id="day-unknown" class="day">
+                <header>
+                    <div class="daynum"></div>
+                    <button type="button" title="Add an event in this date" class="add"></button>
+                </header>
+                <main>
+                </main>                     
+            </section>
+        </template>
+                    
+      
+        
+		<script src="js/calendar.js"></script>
+	</body>
+</html>
